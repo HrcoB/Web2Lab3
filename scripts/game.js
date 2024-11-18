@@ -37,7 +37,7 @@ let ball = {
 // Block parameters
 let blocks = [];
 let blockWidth = 100;
-let blockHeight = 20;
+let blockHeight = 25;
 let blockColumns = 8; // Blocks in row
 let blockRows = 4; // Blocks in column
 let blockCount = 0;
@@ -104,7 +104,7 @@ function update(){
 
    // Add color stops for the gradient
    verticalGradient.addColorStop(0, 'darkred');   // Dark red at the top edge
-   verticalGradient.addColorStop(0.5, 'red');     // Original red in the center
+   verticalGradient.addColorStop(0.5, 'red');     // Red in the center
    verticalGradient.addColorStop(1, 'darkred');   // Dark red at the bottom edge
 
    // Set the gradient as the fill style
@@ -174,7 +174,7 @@ function update(){
 
          // Add color stops for the gradient
          verticalGradient.addColorStop(0, 'darkred');   // Dark red at the top edge
-         verticalGradient.addColorStop(0.5, 'red');     // Original red in the center
+         verticalGradient.addColorStop(0.5, 'red');     // Red in the center
          verticalGradient.addColorStop(1, 'darkred');   // Dark red at the bottom edge
 
          // Set the gradient as the fill style
@@ -220,23 +220,27 @@ function detectCollision(a, b) {
 
 // Ball above block/paddle
 function topCollision(ball, block) {
-   // Check if rectangles intersect and ball bottom left corner passed block top left corner
-   return detectCollision(ball, block) &&  (ball.y + ball.height) >= block.y
+   return detectCollision(ball, block) &&  // Rectangles interesect
+   (ball.y + ball.height) >= block.y &&  // Ball bottom passed block top
+   ball.y < block.y // Ball top above block top
 }
 // Ball below block/paddle
 function bottomCollision(ball, block) {
-   // Check if rectangles intersect and ball top left corner passed block bottom left corner
-   return detectCollision(ball, block) &&  (block.y + block.height) >= ball.y
+   return detectCollision(ball, block) &&  // Rectangles interesect
+   ball.y <= (block.y + block.height) &&  // Ball top passed block bottom
+   (ball.y + ball.height) > (block.y + block.height) // ball bottom below block bottom
 }
 // Ball left of block/paddle
 function leftCollision(ball, block) {
-   // Check if rectangles intersect and ball right corner passed block left corner
-   return detectCollision(ball, block) &&  (ball.x + ball.width) >= block.x
+   return detectCollision(ball, block) &&  // Rectangles interesect
+   (ball.x + ball.width) >= block.x && // Ball right passed block left
+   ball.x < block.x // Ball left is left of block left
 }
 // Ball right of block/paddle
 function rightCollision(ball, block) {
-   // Check if rectangles intersect and ball left corner passed block right corner 
-   return detectCollision(ball, block) &&  (block.x + block.width) >= ball.x
+   return detectCollision(ball, block) &&  // Rectangles interesect
+   ball.x <= (block.x + block.width) && // Ball left passed block right
+   (ball.x + ball.width) > (block.x + block.width) // Ball right is right of block right
 }
 
 function createBlocks(){
