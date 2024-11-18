@@ -68,6 +68,9 @@ window.onload = function(){
    // Fill blocks array
    createBlocks();
 
+   // Random starting direction of ball in range of +- 20
+   ball.speedX = Math.random() * 2 * 20 - 20;
+
    // Add key press event listener
    document.addEventListener('keydown', movepaddle);
 
